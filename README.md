@@ -1,3 +1,17 @@
+# Aplicação Estágio Store
+
+Para rodar a aplicação, basta rodar o comando:
+
+### `npm run start`
+
+E para rodar o servidor, tem que rodar o comando:
+
+### `npx json-server server.json --port 3333`
+
+## Layout
+
+Na pasta "layout", contém as imagens de referência para a criação da interface.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
