@@ -1,23 +1,27 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components';
 import {MdAddShoppingCart} from 'react-icons/md';
 
-import { ProductType } from '../pages/Home';
+import { ProductComplete, ProductType } from '../pages/Home';
+import { CartContext, useCart } from '../hooks/useCart';
 
 interface ProductProps {
   data: ProductType
 }
 
-export const Product = ({data: product}: ProductProps) => {
+export const Product = ({data}: ProductProps) => {
+  const context = useContext(CartContext);
+
   return (
     <ProductContainer>
-      <img src={product.image || ""} alt="product"/>
-      <strong>{product.title || ""}</strong>
-      <span>{product.price || ""}</span>
-      <button>
+      <img src={data.image || ""} alt="product"/>
+      <strong>{data.title || ""}</strong>
+      <span>{data.price || ""}</span>
+      <button onClick={() => console.log(context?.addToCart(data))}>
         <div>
           <MdAddShoppingCart size={16} color="#FFF" />
-          3
+          
+          {context?.cart.find(productContext => productContext.id === data.id)?.quantity || 0}
         </div>
 
         <span>ADICIONAR AO CARRINHO</span>

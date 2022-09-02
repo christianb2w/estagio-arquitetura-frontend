@@ -4,8 +4,16 @@ import styled from 'styled-components';
 import { Product } from "../components/Product";
 import { api } from "../api";
 
+export interface ProductComplete {
+  id: string;
+  title: string;
+  price: number;
+  image: string;
+  quantity: number
+}
+
 export interface ProductType {
-  id: number;
+  id: string;
   title: string;
   price: number;
   image: string;

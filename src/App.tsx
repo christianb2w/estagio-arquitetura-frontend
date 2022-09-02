@@ -5,15 +5,18 @@ import styled from 'styled-components';
 import { DefaultRoutes } from './routes';
 import GlobalStyles from './styles/global';
 import { Header } from './components/Header';
+import { CartProvider } from './hooks/useCart';
 
 function App() {
   return (
     <BrowserRouter>
       <GlobalStyles />
-      <Header />
-      <Container>
-        <DefaultRoutes />
-      </Container>
+      <CartProvider>
+        <Header />
+        <Container>
+          <DefaultRoutes />
+        </Container>
+      </CartProvider>
     </BrowserRouter>
   );
 }

@@ -1,9 +1,18 @@
-import React from "react";
+import React, {useContext} from "react";
 import { MdShoppingBasket } from "react-icons/md"
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 
+import { CartContext } from "../hooks/useCart";
+
 export const Header = () => {
+  const context = useContext(CartContext);
+
+  let cartSize = 0;
+  context?.cart.forEach(product => {
+    cartSize += product.quantity
+  });  
+
   return (
     <HeaderContainer>
       <HeaderWrapper>
@@ -15,7 +24,7 @@ export const Header = () => {
           <div>
             <div>
               <strong>Meu Carrinho</strong>
-              <span>1 item</span>
+              <span>{cartSize} itens</span>
             </div>
             <MdShoppingBasket size={20} color="#fff" />
           </div>
