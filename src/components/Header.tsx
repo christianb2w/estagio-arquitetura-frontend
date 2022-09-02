@@ -1,67 +1,83 @@
-import React from "react";
-import { MdShoppingBasket } from "react-icons/md"
+import React, {useMemo} from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { MdShoppingBasket } from 'react-icons/md';
 
-export const Header = () => {
+import { useCart } from '../hooks/useCart';
+
+const Header = (): JSX.Element => {
+  const { cart } = useCart();
+  const cartSize = useMemo(() => {
+    const total = cart.reduce((accumulator, product) => {
+      const productsQuantity = product.quantity;
+
+      return accumulator + productsQuantity;
+    }, 0);
+
+    return total;
+  }, [cart]);
+
   return (
-    <HeaderContainer>
-      <HeaderWrapper>
-        <Link to="/">
-          <h2>Estágio Store</h2>
-        </Link>
+    <Container>
+      <Wrapper>
+      <Link to="/">
+        <h2>eStoregio Marketplace</h2>
+      </Link>
 
-        <Link to="/cart">
-          <div>
-            <div>
-              <strong>Meu Carrinho</strong>
-              <span>1 item</span>
-            </div>
-            <MdShoppingBasket size={20} color="#fff" />
-          </div>
-        </Link>
-      </HeaderWrapper>
-    </HeaderContainer>
-  )
-}
+      <Cart to="/cart">
+        <div>
+          <strong>Meu carrinho</strong>
+          <span>
+            {cartSize === 1 ? `${cartSize} item` : `${cartSize} itens`}
+          </span>
+        </div>
+        <MdShoppingBasket size={20} color="#FFF" />
+      </Cart>
+      </Wrapper>
+    </Container>
+  );
+};
 
-const HeaderContainer = styled.header`
-  background: #151619;
+export const Container = styled.header`
   padding: 25px;
+  background: #151619;
 `;
 
-const HeaderWrapper = styled.div`
+export const Wrapper = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
-
-  max-width: 1024px;
+  align-items: center; 
+  max-width: 1020px;
   margin: 0 auto;
+  padding: 0 20px;
 
-  a {
+a {
     text-decoration: none;
-  }
-
-
-  h2 {
     color: #E3313C;
-  }
-
-  div {
-    display: flex;
-    align-items: center;
-
-    div {
-      flex-direction: column;
-      text-align: right;
-      margin-right: 10px;
-      color: #fff;
-      strong {
-        display: block;
-      }
-      span {
-        text-align: right;
-      }
+    transition: opacity 0.2s;
+    font-size: 14px;
+    &:hover {
+      opacity: 0.7;
     }
   }
 `;
+
+export const Cart = styled(Link)`
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  div {
+    text-align: right;
+    margin-right: 10px;
+    strong {
+      display: block;
+      color: #fff;
+    }
+    span {
+      font-size: 12px;
+      color: #DDDFE4;
+    }
+  }
+`;
+
+export default Header;

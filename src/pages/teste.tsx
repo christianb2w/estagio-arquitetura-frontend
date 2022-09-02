@@ -1,48 +1,21 @@
-import React, {useMemo} from 'react';
+import React from "react";
 import {
   MdDelete,
   MdAddCircleOutline,
   MdRemoveCircleOutline,
-  MdOutlineKeyboardBackspace
-} from 'react-icons/md';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+  MdOutlineKeyboardBackspace,
+} from "react-icons/md";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-import { Product, useCart} from '../hooks/useCart';
-import formatValueCurrency from '../utils/formatValueCurrency';
-
-const Cart = (): JSX.Element => {
-  const { cart, incrementProduct, decrementProduct, removeFromCart } = useCart();
-
-  const cartTotal = useMemo(() => {
-    const total = cart.reduce((accumulator, product) => {
-      const productsSubtotal = product.price * product.quantity;
-
-      return accumulator + productsSubtotal;
-    }, 0);
-
-    return formatValueCurrency(total);
-  }, [cart]);
-
-  function handleProductIncrement(product: Product) {
-    incrementProduct(product.id)
-  }
-
-  function handleProductDecrement(product: Product) {
-    decrementProduct(product.id)
-  }
-
-  function handleRemoveProduct(productId: string) {
-    removeFromCart(productId)
-  }
-
+export const Cart = (): JSX.Element => {
   return (
     <Container>
       <Link to="/">
         <MdOutlineKeyboardBackspace size={20} color="#151619" />
       </Link>
       <ProductTable>
-      <thead>
+        <thead>
           <tr>
             <th aria-label="product image" />
             <th>PRODUTO</th>
@@ -51,55 +24,49 @@ const Cart = (): JSX.Element => {
             <th aria-label="delete icon" />
           </tr>
         </thead>
-        {cart.map(item => (
-        
-        
-        <tbody key={item.id}>
+        <tbody>
           <tr>
             <td>
-              <img src={item.image} alt="Produto" />
+              <img src="https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis1.jpg" alt="Produto" />
             </td>
             <td>
-              <strong>{item.title}</strong>
-              <span>{formatValueCurrency(item.price)}</span>
+              <strong>Tênis de Corrida</strong>
+              <span>R$ 100,00</span>
             </td>
             <td>
               <div>
                 <button
                   type="button"
-                disabled={item.quantity <= 1}
-                onClick={() => handleProductDecrement(item)}
+                  onClick={() => {}}
                 >
                   <MdRemoveCircleOutline size={20} />
                 </button>
                 <input
                   type="text"
                   readOnly
-                  value={cart.find(itemFind => itemFind.id === item.id)?.quantity || 0}
+                  value={3}
                 />
                 <button
                   type="button"
-                  onClick={() => handleProductIncrement(item)}
+                  onClick={() => {}}
                 >
                   <MdAddCircleOutline size={20} />
                 </button>
               </div>
             </td>
             <td>
-              <strong>{formatValueCurrency(item.price * item.quantity)}</strong>
+              <strong>300</strong>
             </td>
             <td>
               <button
                 type="button"
-                onClick={() => handleRemoveProduct(item.id)}
+                onClick={() => {}}
               >
                 <MdDelete size={20} />
               </button>
             </td>
           </tr>
         </tbody>
-        ))}
-        
       </ProductTable>
 
       <footer>
@@ -107,14 +74,12 @@ const Cart = (): JSX.Element => {
 
         <Total>
           <span>TOTAL</span>
-          <strong>{cartTotal}</strong>
+          <strong>300</strong>
         </Total>
       </footer>
     </Container>
   );
 };
-
-export default Cart;
 
 export const Container = styled.div`
   padding: 30px;
@@ -126,7 +91,7 @@ export const Container = styled.div`
     justify-content: space-between;
     align-items: center;
     button {
-      background: #E3313C;
+      background: #e3313c;
       color: #fff;
       border: 0;
       border-radius: 4px;
@@ -202,8 +167,8 @@ export const Total = styled.div`
   display: flex;
   align-items: baseline;
   span {
-    color: #8E93A5;
-    
+    color: #8e93a5;
+
     font-weight: bold;
   }
   strong {

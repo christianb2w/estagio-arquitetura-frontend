@@ -1,23 +1,38 @@
 import React from 'react';
 import styled from 'styled-components';
-import {MdAddShoppingCart} from 'react-icons/md';
+import { MdAddShoppingCart } from 'react-icons/md';
+import formatValueCurrency from '../utils/formatValueCurrency';
+import { useCart } from '../hooks/useCart';
 
-import { ProductType } from '../pages/Home';
-
-interface ProductProps {
-  data: ProductType
+interface Product {
+  id: string;
+  title: string;
+  image: string;
+  price: number;
 }
 
-export const Product = ({data: product}: ProductProps) => {
+interface ProductItemProps {
+  data: Product
+}
+
+export const ProductItem = ({data}: ProductItemProps): JSX.Element => {
+  const { addToCart, cart } = useCart();
+
+  function handleAddToCart(item: Product): void {
+    addToCart(item);
+  }
+
   return (
     <ProductContainer>
-      <img src={product.image || ""} alt="product"/>
-      <strong>{product.title || ""}</strong>
-      <span>{product.price || ""}</span>
-      <button>
+      <img src={data.image} alt="product"/>
+      <strong>{data.title}</strong>
+      <span>{formatValueCurrency(data.price)}</span>
+      <button
+        onClick={() => handleAddToCart(data)}
+      >
         <div>
           <MdAddShoppingCart size={16} color="#FFF" />
-          3
+          {cart.find(item => item.id === data.id)?.quantity || 0}
         </div>
 
         <span>ADICIONAR AO CARRINHO</span>
@@ -49,7 +64,7 @@ const ProductContainer = styled.li`
       margin: 5px 0 20px;
     }
     button {
-      background: #E3313C;
+      background: ${props => props.theme.colors.primaryMain };
       color: #fff;
       border: 0;
       border-radius: 4px;

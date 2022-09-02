@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
   * {
@@ -7,16 +7,13 @@ export default createGlobalStyle`
     outline: 0;
     box-sizing: border-box;
   }
-
   body {
+    background: #32333a;
     -webkit-font-smoothing: antialiased;
   }
-
   body, input, button {
-    background: #32333A;
-    font: 14px 'Roboto', sans-serif;
+    font: 14px Roboto, sans-serif;
   }
-
   button {
     cursor: pointer;
   }
